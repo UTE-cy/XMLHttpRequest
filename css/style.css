@@ -1,0 +1,126 @@
+/*=============================  Reset start ====================================================*/
+
+* {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, form, fieldset, input, textarea, p, blockquote, th, td {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: arial, Verdana, Geneva, Helvetica;
+  font-size: 12px;
+  line-height: 1.5;
+  color: #555;
+  -webkit-text-size-adjust: none;
+}
+
+input::-ms-clear {
+  display: none;
+}
+
+table {
+  border-spacing: 0;
+  border-collapse: collapse;
+}
+
+fieldset, img {
+  border: 0;
+}
+
+address, caption, cite, code, dfn, em, strong, th, var {
+  font-weight: normal;
+  font-style: normal;
+}
+
+ol, ul {
+  list-style: none;
+}
+
+caption, th {
+  text-align: left;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-size: 100%;
+  font-weight: normal;
+}
+
+q:before, q:after {
+  content: '';
+}
+
+abbr, acronym {
+  border: 0;
+}
+
+i {
+  font-style: normal;
+}
+
+a {
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+input, button, select, textarea {
+  outline: none;
+}
+
+textarea {
+  resize: none;
+}
+
+img {
+  display: block;
+}
+
+
+/*=============================  Reset end ====================================================*/
+
+html, body {
+  font-family: 'Microsoft YaHei', Helvetica, Arial, sans-serif;
+  width: 100%;
+  height: 100%;
+}
+
+.start {
+  width: 100%;
+  height: 100%;
+  background: #000;
+  position: relative;
+  /*position: relative;
+  overflow: hidden;*/
+}
+.jump{
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 60px;
+  height: 20px;
+  line-height: 20px;
+  background: #ccc;
+  color: #fff;
+  border-radius: 20px;
+  text-align: center;
+  cursor: pointer;
+  z-index: 99;
+}
+
+.start video {
+  /*position: absolute;
+  top: 50%;
+  left: 50%;*/
+  /*height: auto;
+  width: 100%;*/
+  /*object-fit: cover;  // IE不支持*/
+  object-fit: cover;
+  display: block;
+}

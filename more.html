@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+
+  <button id="btnSelectFiles">选择文件</button>
+  <button id="btnUpload">上传</button>
+  <ol id="filesView"></ol>
+  <script>
+    /*
+     *----------------------------
+     * AjaxUploadX
+     * 功能: 1次ajax请求(XMLHttpRequest)上传多个文件
+     * 作者: Igin Cui, 2012/8/20
+     * 联系我: @IginCui (新浪微博)
+     *         cuixiping@yeah.net
+     *         http://blog.csdn.net/cuixiping
+     *----------------------------
+     */
+    /* 本例在Firefox 14, Chrome 20测试通过，未测试其他浏览器 */
+    /* IE9不支持files特性，所以本例不支持IE9 */
+    function AjaxUploadX(ops) {
+      if (!window.FormData || !window.FileList) {
+        //throw('Your browser does not support ajax upload');
+        throw ('您的浏览器不支持ajax upload');
+      }
+      this.options = ops || {};
+      this._init();
+    }
+    AjaxUploadX.prototype = {
+      _init: function() {
+        var ele = document.createElement('input');
+        ele.multiple = this.options.multiple !== false;
+        ele.type = 'file';
+        ele.style.display = 'none';
+        document.body.appendChild(ele);
+        var THIS = this;
+        ele.onchange = function(e) {
+          THIS._onchange(e);
+        }
+        this._input = ele;
+      },
+      _destroy: function() {
+        document.body.removeChild(this._input);
+      },
+      _onchange: function(e) {
+        var ops = this.options;
+        if (ops.onselectfiles) {
+          ops.onselectfiles(e.target.files);
+        }
+      },
+      selectFiles: function() {
+        this._input.click();
+      },
+      upload: function() {
+        var xhr = new XMLHttpRequest();
+        var ops = this.options;
+
+        var v, h, evs = {
+          loadstart: 0,
+          loadend: 0,
+          progress: 0,
+          load: 0,
+          error: 0,
+          abort: 0
+        };
+        for (v in evs) {
+          if (h = ops['on' + v]) {
+            xhr.addEventListener(v, h, false);
+          }
+          if (ops['uploadHandlers'] && (h = ops['uploadHandlers']['on' + v])) {
+            xhr.upload.addEventListener(v, h, false);
+          }
+        }
+
+        var data = new FormData();
+
+        var files = this._input.files;
+        if (!files.length) {
+          this.options.onerror('No files');
+          return;
+        }
+        for (var i = 0, n = files.length; i < n; i++) {
+          data.append(ops.formname || "uploadedfile[]", files[i]);
+        }
+
+        xhr.open("POST", ops.url, true);
+        xhr.send(data);
+      }
+    };
+  </script>
+  <script>
+    var config = {
+      url: "saveupload.php",
+      formname: "uploadedfile[]",
+      onselectfiles: function(files) {
+        var s = '';
+        for (var i = 0, n = files.length; i < n; i++) {
+          s += '<li>' + files[i].name + ' (' + files[i].size + ' bytes)' + '</li>';
+        }
+        document.getElementById("filesView").innerHTML = s;
+      },
+      onload: function(e) {
+        alert(e.target.responseText);
+      },
+      uploadHandlers: {
+        progress: function(e) {}
+      }
+    };
+
+    var aux = new AjaxUploadX(config);
+
+    document.getElementById("btnSelectFiles").onclick = function() {
+      aux.selectFiles();
+    }
+    document.getElementById("btnUpload").onclick = function() {
+      aux.upload();
+    }
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <form action="http://vrpie.vrp3d.com/dabinart/api/works_upload.php" method="POST" enctype="multipart/from-data" id="uploadform" onSubmit="return false">
+    <div class="inpuys">
+      <input type="file" name="fileselect[]" id="uploadfile" value="选择文件" class="cho">
+      <input type="submit" value="上传" id="submit_btn" class="sub btn btn-info">
+    </div>
+  </form>
+
+  <script type="text/javascript" src="js/jquery.js"></script>
+  <script type="text/javascript" src="js/jquery.form.js"></script>
+  <script src="http://cdn.bootcss.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+  <script type="text/javascript">
+    $(document).ready(function() {
+      var progressbox = $("#progressbox");
+      var progressbar = $("#progressbar");
+      var progress = $("#progress");
+      var completed = "0%";
+      var options = {
+        beforeSubmit: beforeSubmit,
+        uploadProgress: OnProgress,
+        success: afterSuccess,
+        resetForm: true
+      };
+      $("#uploadform").submit(function() {
+        $(this).ajaxSubmit(options);
+        return false;
+      });
+
+      function OnProgress(event, position, total, percentComplete) {
+        progressbar.width(percentComplete + "%");
+        progress.html(percentComplete + "%");
+      }
+
+      function afterSuccess() {
+        $("#output").html("上传完成!!");
+      }
+
+      function beforeSubmit() {
+        if (!$("#uploadfile").val()) {
+          $("#output").html("请选择文件!!");
+          return false;
+        }
+        progressbar.width(completed);
+        progress.html(completed);
+      }
+    });
+  </script>
+</body>
+
+</html>

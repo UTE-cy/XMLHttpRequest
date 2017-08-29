@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, maximum-scale=1.0, user-scalable=yes" />
+
+  <title>管理员上传</title>
+  <!-- <link rel="stylesheet" href="css/common.css">
+  <link rel="stylesheet" href="css/index.css">
+  <link rel="stylesheet" href="src/css/layui.css"> -->
+  <script type="text/javascript" src="js/jquery.js"></script>
+</head>
+
+<body>
+  <div class="wrap">
+    <div class="nav">
+      <div class="nav-link">
+        <a href="管理员登录.html">首页</a>
+        <a href="管理员查看公开画展.html">公开画展</a>
+        <a href="管理员查看小名人堂.html">小名人堂</a>
+        <a class="cur" href="javascript:;">作品上传</a>
+        <a href="bowuguan/WorldArt.html" target="_blank">世界名画博物馆</a>
+        <!-- <div class="search">
+          <input type="text" name="" value="" placeholder="搜索">
+        </div> -->
+      </div>
+
+      <div class="reg t-reg"><span class="t-tit">管理中心</span><span class="t-img"></span></div>
+    </div>
+    <style media="screen">
+      .con {
+        position: relative;
+      }
+
+      .mark-up {
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.2);
+        position: absolute;
+        left: 0;
+        top: 0;
+        z-index: 99;
+        display: none;
+      }
+
+      .up-msg {
+        width: 300px;
+        height: 160px;
+        background: #fff;
+        border-radius: 12px;
+        box-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        top: 20%;
+        box-sizing: border-box;
+        padding: 0 10px;
+      }
+
+      .up-close {
+        position: absolute;
+        width: 60px;
+        height: 30px;
+        border-radius: 8px;
+        box-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
+        left: 50%;
+        transform: translateX(-50%);
+        bottom: 30px;
+        font-size: 16px;
+        text-align: center;
+        line-height: 30px;
+        cursor: pointer;
+      }
+
+      .msg-show {
+        font-size: 16px;
+        margin-top: 40px;
+        text-align: center;
+        display: none;
+      }
+
+      .load-num {
+        margin-top: 30px;
+        text-align: center;
+        line-height: 32px;
+      }
+
+      .loading {
+        width: 100%;
+        height: 20px;
+        background: green;
+      }
+    </style>
+    <div class="mark-up">
+      <div class="up-msg">
+        <p class="msg-show">sdsdds</p>
+        <p class="load-num" id="load-num">50%</p>
+        <p class="loading" id="loading"></p>
+        <span class="up-close">确定</span>
+      </div>
+    </div>
+    <form id="upload">
+      <!--  enctype="multipart/form-data" method="post" action="http://vrpie.vrp3d.com/dabinart/api/works_upload.php"> -->
+      <!-- <form id="upload" action="http://vrpie.vrp3d.com/dabinart/api/works_upload.php" method="post" enctype="multipart/form-data"> -->
+      <div class="edit-con">
+        <h4 class="edit-titel">作品上传</h4>
+        <div class="row">
+          <div class="row-left">作品标题：</div>
+          <div class="row-right"><input class="art-name" id="title" type="text" name="title"></div>
+        </div>
+        <div class="row">
+          <div class="row-left">年级：</div>
+          <div class="row-right">
+            <div class="row-class">
+              <select class="select" id="grade" name="grade">
+                  <option value ="">请选择年级</option>
+                  <option value ="一年级">一年级</option>
+                  <option value="二年级">二年级</option>
+                  <option value="三年级">三年级</option>
+                  <option value="四年级">四年级</option>
+                  <option value="五年级">五年级</option>
+                  <option value="六年级">六年级</option>
+                </select>
+              <span class="select-t">班级：</span>
+              <select class="select" id="class" name="class">
+                  <option value ="">请选择班级</option>
+                  <option value ="1班">1班</option>
+                  <option value="2班">2班</option>
+                  <option value="3班">3班</option>
+                  <option value="4班">4班</option>
+                  <option value="5班">5班</option>
+                </select>
+            </div>
+          </div>
+          <p class="err">请选择</p>
+        </div>
+        <div class="row">
+          <div class="row-left">作者姓名：</div>
+          <div class="row-right">
+            <div class="row-class">
+              <select class="select" id="author" name="author">
+                  <option value ="">请选择姓名</option>
+                  <option value ="saab">Saab</option>
+                  <option value="opel">Opel</option>
+                  <option value="audi">Audi</option>
+                </select>
+              <span class="select-t">作品主题：</span>
+              <select class="select" id="subject" name="subject">
+                  <option value ="">请选择主题</option>
+                  <option value ="国画精粹">国画精粹</option>
+                  <option value="蜡笔生辉">蜡笔生辉</option>
+                  <option value="心灵手巧">心灵手巧</option>
+                  <option value="水彩世界">水彩世界</option>
+                  <option value="水粉走廊">水粉走廊</option>
+                  <option value="素描之家">素描之家</option>
+                </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="row-left">作品题材：</div>
+          <div class="row-right">
+            <div class="row-class">
+              <select class="select" id="theme" name="theme">
+                  <option value ="">请选择题材</option>
+                  <option value ="水彩画">水彩画</option>
+                  <option value="水粉画">水粉画</option>
+                  <option value="蜡笔画">蜡笔画</option>
+                  <option value="油画">油画</option>
+                  <option value="中国画">中国画</option>
+                  <option value="素描">素描</option>
+                  <option value="手工作品">手工作品</option>
+                </select>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="row-left">作品图片：</div>
+          <div class="row-right upload-img"><span class="url gr-url showFileName-img"></span><span class="file-btn">选择文件</span><input class="file" id="image" type="file" name="fileselect[]" accept="image/png,image/gif,image/jpeg" value="" onchange="fileSelected();">
+            <p class="fileerrorTip-img"></p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="row-left">语音解说：</div>
+          <div class="row-right upload-audio"><span class="url gr-url showFileName-audio"></span><span class="file-btn">选择文件</span><input class="file" id="audio" type="file" name="fileselect[]" accept="audio/mpeg" value="" onchange="fileSelecteds();">
+            <p class="fileerrorTip-audio"></p>
+          </div>
+        </div>
+        <div class="row gr-row">
+          <div class="row-left">文字解说：</div>
+          <div class="row-right">
+            <textarea class="textarea gr-textarea" id="content" name="content" rows="8" cols="80"></textarea>
+          </div>
+        </div>
+        <div class="row">
+          <div class="row-left"></div>
+          <div class="row-right">
+            <span class="row-btn grsc-btn" onclick="uploadFile()">提交</span>
+            <!-- <input class="row-btn grsc-btn" type="submit" value="提交"> -->
+            <span class="reset gr-reset">重制</span>
+          </div>
+        </div>
+        <div id="fileName">1</div>
+        <div id="fileSize">1</div>
+        <div id="fileType">1</div>
+        <div id="fileNames">2</div>
+        <div id="fileSizes">2</div>
+        <div id="fileTypes">2</div>
+        <p>***************************************</p>
+        <div id="progressNumber"></div>
+        <p>***************************************</p>
+        <div id="progressNumbers" style="width:0px;height:20px;background:green"></div>
+      </div>
+    </form>
+  </div>
+  <div class="foot ">
+    <p class="copy ">版权所有：深圳市中视典数字科技有限公司（2012-2017）版权所有 <span class="lf ">|</span> <a href=" ">链接合作</a></p>
+    <p class="copy-num ">粤ICP必备 13054486 <span class="lf ">|</span>京公网安备 11010802010319</p>
+  </div>
+  </div>
+
+  <script type="text/javascript">
+    function fileSelected() {
+      var file = document.getElementById('image').files[0];
+      if (file) {
+        var fileSize = 0;
+        if (file.size > 1024 * 1024)
+          fileSize = (Math.round(file.size * 100 / (1024 * 1024)) / 100).toString() + 'MB';
+        else
+          fileSize = (Math.round(file.size * 100 / 1024) / 100).toString() + 'KB';
+
+        document.getElementById('fileName').innerHTML = 'Name: ' + file.name;
+        document.getElementById('fileSize').innerHTML = 'Size: ' + fileSize;
+        document.getElementById('fileType').innerHTML = 'Type: ' + file.type;
+      }
+    }
+
+    function fileSelecteds() {
+      var file = document.getElementById('audio').files[0];
+      if (file) {
+        var fileSize = 0;
+        if (file.size > 1024 * 1024)
+          fileSize = (Math.round(file.size * 100 / (1024 * 1024)) / 100).toString() + 'MB';
+        else
+          fileSize = (Math.round(file.size * 100 / 1024) / 100).toString() + 'KB';
+
+        document.getElementById('fileNames').innerHTML = 'Name: ' + file.name;
+        document.getElementById('fileSizes').innerHTML = 'Size: ' + fileSize;
+        document.getElementById('fileTypes').innerHTML = 'Type: ' + file.type;
+      }
+    }
+
+    function uploadFile() {
+      var title = $('#title').val();
+      var grade = $('#grade').val();
+      var classs = $('#class').val();
+      var author = $('#author').val();
+      var subject = $('#subject').val();
+      var theme = $('#theme').val();
+      var content = $('#content').val();
+      var image = $('#image').prop("files")[0],
+        audio = $('#audio').prop("files")[0];
+
+      if (title == null || title == '') {
+        alert('填写标题！')
+      } else if (grade == null || grade == '') {
+        alert('选择班级！')
+      } else if (classs == null || classs == '') {
+        alert('选择年级！')
+      } else if (author == null || author == '') {
+        alert('选择作者！')
+      } else if (subject == null || subject == '') {
+        alert('选择主题！')
+      } else if (theme == null || theme == '') {
+        alert('选择题材！')
+      } else if (image == null || image == '') {
+        alert('选择图片！')
+      } else if (audio == null || audio == '') {
+        alert('选择语音！')
+      } else if (content == null || content == '') {
+        alert('填写解说词！')
+      } else {
+        var fd = new FormData(document.getElementById("upload"));
+        fd.append("image", document.getElementById('image').files[0]);
+        fd.append("audio", document.getElementById('audio').files[0]);
+        var xhr = new XMLHttpRequest();
+        xhr.upload.addEventListener("progress", uploadProgress, false);
+        xhr.addEventListener("load", uploadComplete, false);
+        xhr.addEventListener("error", uploadFailed, false);
+        xhr.addEventListener("abort", uploadCanceled, false);
+        xhr.open("POST", "http://vrpie.vrp3d.com/dabinart/api/works_upload.php");
+        xhr.send(fd);
+      }
+    }
+
+    function uploadProgress(evt) {
+      console.log(evt)
+      if (evt.lengthComputable) {
+        var percentComplete = Math.round(evt.loaded * 100 / evt.total);
+        document.getElementById('progressNumber').innerHTML = percentComplete.toString() + '%';
+        document.getElementById('progressNumbers').style.width = 300 * percentComplete / 100 + 'px';
+        $('.load-num').html(percentComplete.toString() + '%');
+        $('.loading').css('width', 280 * percentComplete / 100 + 'px');
+        $('.mark-up').show();
+        $('.up-close').hide();
+      } else {
+        document.getElementById('progressNumber').innerHTML = '无法计算';
+      }
+    }
+
+    function uploadComplete(evt) {
+      /* 当服务器响应后，这个事件就会被触发 */
+      //alert(evt.target.responseText);
+      var json = evt.target.responseText;
+      var jsonData = $.parseJSON(json);
+      console.log(jsonData);
+      console.log(jsonData.msg);
+      $('.msg-show').html(jsonData.msg).show();
+      $('.load-num').hide();
+      $('.loading').hide();
+      $('.up-close').show();
+    }
+
+    function uploadFailed(evt) {
+      alert("上传文件发生了错误尝试 ");
+    }
+
+    function uploadCanceled(evt) {
+      alert("上传被用户取消或者浏览器断开连接 ");
+    }
+
+    $('.up-close').on('click', function() {
+      $('.mark-up').hide();
+      $('#upload')[0].reset();
+      $('.showFileName-img').html('');
+      $('.showFileName-audio').html('');
+    });
+  </script>
+</body>
+
+</html>

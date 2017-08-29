@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <!--允许全屏-->
+  <meta content="yes" name="apple-mobile-web-app-capable">
+  <meta content="yes" name="apple-touch-fullscreen">
+  <meta content="telephone=no,email=no" name="format-detection">
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+  <title>视频</title>
+  <link rel="stylesheet" href="./css/style.css">
+</head>
+
+<body>
+  <!-- 开篇视频 -->
+  <div class="start">
+    <span class="jump">跳过</span>
+    <video id="start-video" width="100%" height="100%" preload webkit-playsinline autoplay>
+      <source src="./videos/合成940.mp4" type='video/mp4'>
+      您的浏览器不支持 video 标签。
+    </video>
+  </div>
+
+  <!--
+    2160p：3840x2160
+    1440p：2560x1440
+    1080p：1920x1080
+     720p： 1280x720
+     480p：  854x480
+     360p：  640x360
+     240p：  426x240
+  -->
+
+
+  <script type="text/javascript" src="./js/jquery.js"></script>
+  <script type="text/javascript" src="./js/index.js"></script>
+</body>
+
+</html>
